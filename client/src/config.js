@@ -1,2 +1,3 @@
-export const backendLocation = "https://sports-management-di9x.onrender.com";
+export const backendLocation =
+ "https://tours-ngyt.onrender.com";
 // `http://localhost:3000`;

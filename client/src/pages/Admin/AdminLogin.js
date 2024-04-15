@@ -5,9 +5,11 @@ import { useAuth } from "../../context/AuthContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { validateLogin } from "../../utils/Validation";
 import { backendLocation } from "../../config";
+
 function AdminLogin() {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
   const { login } = useAuth();
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -27,8 +29,12 @@ function AdminLogin() {
     } catch (error) {
       console.log(error);
     }
-    // resetForm();
   };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const initialValues = {
     email: "",
     password: "",
@@ -69,7 +75,18 @@ function AdminLogin() {
               </div>
               <div className="d-grid mt-3">
                 <label htmlFor="password">Password</label>
-                <Field type="password" id="password" name="password" />
+                <Field
+                  type={showPassword ? "text" : "password"} // Conditionally set the type based on showPassword state
+                  id="password"
+                  name="password"
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
                 <ErrorMessage
                   name="password"
                   component="div"
@@ -77,9 +94,12 @@ function AdminLogin() {
                 />
               </div>
               <div className="d-flex justify-content-between align-items-center mt-3">
-                <button type="submit" className="button">
-                  Login
-                </button>
+                <div className="d-flex justify-content-between align-items-center">
+                  <button type="submit" className="btn btn-primary mt-3">
+                    Submit
+                  </button>
+                  <Link to={"/admin/forget-password"}>Forget Password</Link>
+                </div>
                 <Link className="button" to={"/"}>
                   Back
                 </Link>

@@ -17,11 +17,15 @@ var PackageSchema = new mongoose.Schema(
       ref: "Tour",
       require: true,
     },
-    price: { type: Number, require: true },
     duration: { type: Number, require: true },
     startPoint: { type: String, require: true },
+    mode: {
+      bus: { type: Number, require: true },
+      train: { type: Number, require: true },
+      airline: { type: Number, require: true },
+    },
   },
-  { timestamps:true }
+  { timestamps: true }
 );
 
 //Export the model

@@ -3,31 +3,40 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { backendLocation } from "../../config";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-const CollegeLogin = () => {
+const TourForgetPassword = () => {
   const [serverError, setServerError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to control visibility of password
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const initialValues = {
     email: "",
     password: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("New Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character"
+      ),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const { data } = await axios.post(
-        `${backendLocation}/college/login`,
+      const { data } = await axios.put(
+        `${backendLocation}/tour/change-password`,
         values
       );
       if (data.message) {
@@ -36,12 +45,11 @@ const CollegeLogin = () => {
         login();
         navigate(`/`);
         localStorage.setItem("token", data.token);
-        localStorage.setItem("role", "college");
+                localStorage.setItem("role", "tour");
       }
     } catch (error) {
       console.log(error);
     }
-    // resetForm();
   };
 
   return (
@@ -66,7 +74,7 @@ const CollegeLogin = () => {
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
-              <h2 className="card-title mb-4">Login</h2>
+              <h2 className="card-title mb-4">Forget Password</h2>
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -88,8 +96,8 @@ const CollegeLogin = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <div className="password-input-container">
+                    <label htmlFor="password">New Password</label>
+                    <div className="input-group">
                       <Field
                         type={showPassword ? "text" : "password"}
                         id="password"
@@ -98,8 +106,8 @@ const CollegeLogin = () => {
                       />
                       <button
                         type="button"
+                        className="btn btn-outline-secondary"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="btn btn-sm btn-secondary"
                       >
                         {showPassword ? "Hide" : "Show"}
                       </button>
@@ -110,12 +118,32 @@ const CollegeLogin = () => {
                       className="text-danger"
                     />
                   </div>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <button type="submit" className="btn btn-primary mt-3">
-                      Submit
-                    </button>
-                    <Link to={"/college/forget-password"}>Forget Password</Link>
+                  <div className="form-group">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <div className="input-group">
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        className="form-control"
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="div"
+                      className="text-danger"
+                    />
                   </div>
+                  <button type="submit" className="btn btn-primary mt-3">
+                    Submit
+                  </button>
                 </Form>
               </Formik>
             </div>
@@ -126,4 +154,4 @@ const CollegeLogin = () => {
   );
 };
 
-export default CollegeLogin;
+export default TourForgetPassword;

@@ -5,7 +5,7 @@ import { backendLocation } from "../config";
 import { useAuth } from "../context/AuthContext";
 import PackageModal from "./Tour/PackageModal";
 import { jwtDecode } from "jwt-decode";
-import moment from "moment";
+import Package from "../components/Package";
 const PlacePage = () => {
   const [place, setPlace] = useState({});
   const [packages, setPackages] = useState([]);
@@ -13,9 +13,6 @@ const PlacePage = () => {
   const [serverError, setServerError] = useState(false);
   const [show, setShow] = useState(false);
   const { role } = useAuth();
-  const navigate = useNavigate();
-  const [amount, setAmount] = useState("");
-  const [orderId, setOrderId] = useState("");
 
   const decode = jwtDecode(token);
   const params = useParams();
@@ -36,7 +33,7 @@ const PlacePage = () => {
         } else {
           setPlace(response?.data?.place);
           setPackages(response?.data?.packages);
-          setAmount(response?.data?.price);
+          console.log(response.data.packages);
         }
       } catch (error) {}
     };
@@ -49,71 +46,6 @@ const PlacePage = () => {
     setShow(false);
   };
 
-  const createOrder = async () => {
-    try {
-      const response = await axios.post(
-        `${backendLocation}/college/create-order`,
-        {
-          amount,
-        }
-      );
-      console.log(response.data.id);
-      setOrderId(response.data.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const bookHandler = async (id, tour) => {
-    await createOrder();
-    const options = {
-      key: process.env.KEY_ID,
-      amount: amount, // Amount in paise (e.g., 1000 paise = ₹10)
-      currency: "INR",
-      name: "Your Company Name",
-      description: "Test Transaction",
-      image: "https://example.com/your_logo.png",
-      order_id: orderId,
-      handler: async (response) => {
-        console.log(response);
-        // Handle success
-        const res = await axios.post(
-          `${backendLocation}/college/create-booking`,
-          {
-            package: id,
-            date: moment(Date.now()).format("DD/MM/YYYY"),
-            college: decode.id,
-            tour,
-            price:amount,
-            place:place._id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (res?.data?.message) {
-          setServerError(res?.data?.message);
-        } else {
-          navigate("/college/bookings");
-        }
-      },
-      prefill: {
-        name: "John Doe",
-        email: "john@example.com",
-        contact: "9999999999",
-      },
-      notes: {
-        address: "Test Address",
-      },
-      theme: {
-        color: "#F37254",
-      },
-    };
-    const paymentObject = new window.Razorpay(options);
-    await paymentObject.open();
-  };
   return (
     <div className="container view-height my-3">
       {serverError && (
@@ -136,7 +68,12 @@ const PlacePage = () => {
         <div>
           <h2>{place.location}</h2>
           {role === "tour" && (
-            <button onClick={() => setShow(true)}>ADD Package</button>
+            <button
+              onClick={() => setShow(true)}
+              className="btn btn-primary mb-3"
+            >
+              ADD Package
+            </button>
           )}
         </div>
         <img
@@ -155,13 +92,13 @@ const PlacePage = () => {
               <div className="card h-100">
                 <div className="card-body">
                   <h5 className="card-title">{pkg.name}</h5>
-                  <p className="card-text">Price: {pkg.price}</p>
+                  <p className="card-text">Bus: {pkg.mode?.bus}</p>
+                  <p className="card-text">Train: {pkg.mode?.train}</p>
+                  <p className="card-text">Airline: {pkg.mode?.airline}</p>
                   <p className="card-text">Duration: {pkg.duration} days</p>
                   <p className="card-text">Start Point: {pkg.startPoint}</p>
                   {role === "college" && (
-                    <button onClick={() => bookHandler(pkg._id, pkg.tour)}>
-                      Book
-                    </button>
+                    <Package place={place} pkg={pkg} a={pkg.mode?.bus} />
                   )}
                 </div>
               </div>

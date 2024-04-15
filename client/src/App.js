@@ -24,6 +24,10 @@ import CreateBooking from "./pages/College/CreateBooking";
 import AddPlaceForm from "./pages/Admin/CreatePlaces";
 import PlacesPage from "./pages/Places";
 import ViewPlacePage from "./pages/OnePlace";
+import AllPackages from "./pages/Admin/Packages";
+import AdminForgetPassword from "./pages/Admin/AdminForgetPasswrod";
+import TourForgetPassword from "./pages/Tour/TourForgetPasswrod";
+import CollegeForgetPassword from "./pages/College/CollegeForgetPasswrod";
 const App = () => {
   const { isLoggedIn, role } = useAuth();
   return (
@@ -42,6 +46,9 @@ const App = () => {
         <Route exact path="/contactus" element={<ContactUsPage />} />
         <Route exact path="/places" element={<PlacesPage />} />
         <Route exact path="/place/:id" element={<ViewPlacePage />} />
+        <Route path="/admin/forget-password" element={<AdminForgetPassword />} />
+        <Route path="/tour/forget-password" element={<TourForgetPassword />} />
+        <Route path="/college/forget-password" element={<CollegeForgetPassword/>} />
 
         {/* <Route exact path="/signup" element={Sing}>
         <h1>Sign Up Page</h1>
@@ -64,6 +71,7 @@ const App = () => {
         {isLoggedIn && role === "admin" && (
           <>
             <Route path="/create-place" element={<AddPlaceForm />} />
+            <Route path="/packages" element={<AllPackages />} />
             <Route path="/colleges" element={<Colleges />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/colleges" element={<Colleges />} />

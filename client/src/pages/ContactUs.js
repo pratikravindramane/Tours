@@ -51,9 +51,13 @@ const ContactUsPage = () => {
             Address: 1234 Main Street, City, Country
           </p>
           <p>
-            Nullam vestibulum, leo non interdum faucibus, libero enim varius
-            nisl, nec pharetra sem arcu non nisi. Nulla facilisi. Suspendisse
-            potenti. Vivamus varius velit nec nunc sodales.
+            From visits to manufacturing facilities and research centers to
+            interactions with industry experts and hands-on workshops, our
+            industrial visit programs offer a holistic learning experience.
+            Whether it's exploring cutting-edge technology in the automotive
+            sector or understanding sustainable practices in the manufacturing
+            industry, we strive to inspire and empower the next generation of
+            professionals.
           </p>
         </div>
       </div>

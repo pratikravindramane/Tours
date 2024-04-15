@@ -19,12 +19,21 @@ const TourRegister = () => {
     email: Yup.string().email("Invalid email").required("Email is required"),
     phone: Yup.string()
       .required("Phone is required")
-      .matches(/^[0-9]{10}$/, "Password must be exactly 10 digits long"),
-    password: Yup.string().required("Password is required"),
+      .matches(/^[0-9]{10}$/, "Phone must be exactly 10 digits long"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
     packages: Yup.array(),
   });
+
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to control visibility of password
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
       const newEmployee = await axios.post(`${backendLocation}/tour/register`, {
@@ -40,6 +49,7 @@ const TourRegister = () => {
     }
     // resetForm();
   };
+
   return (
     <div className="container mt-5">
       {serverError && (
@@ -120,20 +130,29 @@ const TourRegister = () => {
 
                     <div className="form-group">
                       <label htmlFor="password">Password</label>
-                      <Field
-                        type="password"
-                        name="password"
-                        className={`form-control ${
-                          errors.password && touched.password
-                            ? "is-invalid"
-                            : ""
-                        }`}
-                      />
+                      <div className="password-input-container">
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          className={`form-control ${
+                            errors.password && touched.password
+                              ? "is-invalid"
+                              : ""
+                          }`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="btn btn-sm btn-secondary mt-1"
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </button>
                       <ErrorMessage
                         name="password"
                         component="div"
                         className="invalid-feedback"
                       />
+                      </div>
                     </div>
 
                     <button type="submit" className="btn btn-primary">

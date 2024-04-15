@@ -3,7 +3,7 @@ const Tour = require("../model/Tour");
 const Package = require("../model/Package");
 const Bookings = require("../model/Bookings");
 const validateMongoDbId = require("../utils/validateMongoDbId");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const genrateToken = require("../utils/genrateToken");
 // login
 const login = asyncHandler(async (req, res) => {
@@ -57,8 +57,13 @@ const register = asyncHandler(async (req, res) => {
 
 // Function to create a new package
 const createPackage = asyncHandler(async (req, res) => {
+  const { train, bus, airline } = req.body;
+  console.log(req.body)
   try {
-    const package = new Package(req.body);
+    const package = new Package({
+      ...req.body,
+      mode: { train, bus, airline },
+    });
     await package.save();
     res.status(201).json(package);
   } catch (err) {
@@ -73,7 +78,7 @@ const viewPackagesByTour = asyncHandler(async (req, res) => {
   try {
     const packages = await Package.find({ tour: id })
       .populate("place")
-      .populate("tour");;
+      .populate("tour");
     res.json(packages);
   } catch (err) {
     throw new Error(err);
@@ -89,7 +94,7 @@ const viewBookingByTour = asyncHandler(async (req, res) => {
       .populate("place")
       .populate("package")
       .populate("college")
-      .populate("tour");;
+      .populate("tour");
     res.json(bookings);
   } catch (err) {
     throw new Error(err);

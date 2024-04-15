@@ -9,29 +9,38 @@ const PackageModal = ({ show, handleClose, data }) => {
 
   const initialValues = {
     name: "",
-    price: "",
     duration: "",
     startPoint: "",
+    bus: "",
+    train: "",
+    airline: "",
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    price: Yup.number()
-      .required("Price is required")
-      .positive("Price must be positive"),
     duration: Yup.number()
       .required("Duration is required")
       .positive("Duration must be positive"),
     startPoint: Yup.string().required("Start point is required"),
+    bus: Yup.number().nullable().positive("Bus price must be positive"),
+    train: Yup.number().nullable().positive("Train price must be positive"),
+    airline: Yup.number().nullable().positive("Airline price must be positive"),
   });
 
   const handleSubmit = async (values) => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     try {
       const { datas } = await axios.post(
         `${backendLocation}/tour/create-package`,
-        { ...values, place: data.place, tour: data.tour },
+        {
+          ...values,
+          place: data.place,
+          tour: data.tour,
+          bus: values.bus,
+          train: values.train,
+          airline: values.airline,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,7 +53,9 @@ const PackageModal = ({ show, handleClose, data }) => {
       } else {
         handleClose();
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -101,22 +112,7 @@ const PackageModal = ({ show, handleClose, data }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="price">Price</label>
-                    <Field
-                      type="number"
-                      name="price"
-                      className={`form-control ${
-                        touched.price && errors.price ? "is-invalid" : ""
-                      }`}
-                    />
-                    <ErrorMessage
-                      name="price"
-                      component="div"
-                      className="invalid-feedback"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="duration">Duration</label>
+                    <label htmlFor="duration">Duration Days</label>
                     <Field
                       type="number"
                       name="duration"
@@ -143,6 +139,51 @@ const PackageModal = ({ show, handleClose, data }) => {
                     />
                     <ErrorMessage
                       name="startPoint"
+                      component="div"
+                      className="invalid-feedback"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="bus">Bus Price</label>
+                    <Field
+                      type="number"
+                      name="bus"
+                      className={`form-control ${
+                        touched.bus && errors.bus ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="bus"
+                      component="div"
+                      className="invalid-feedback"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="train">Train Price</label>
+                    <Field
+                      type="number"
+                      name="train"
+                      className={`form-control ${
+                        touched.train && errors.train ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="train"
+                      component="div"
+                      className="invalid-feedback"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="airline">Airline Price</label>
+                    <Field
+                      type="number"
+                      name="airline"
+                      className={`form-control ${
+                        touched.airline && errors.airline ? "is-invalid" : ""
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="airline"
                       component="div"
                       className="invalid-feedback"
                     />

@@ -24,7 +24,7 @@ router.post(
     try {
       const { amount } = req.body;
       const options = {
-        amount: 1000 * 100, // Razorpay expects amount in paise
+        amount: amount * 100, // Razorpay expects amount in paise
         currency: "INR",
         receipt: "receipt#1",
         payment_capture: 1,

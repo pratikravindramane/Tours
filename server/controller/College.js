@@ -88,11 +88,10 @@ const viewCollegeBooking = asyncHandler(async (req, res) => {
 // Function to create a new booking
 const createBooking = asyncHandler(async (req, res) => {
   const { college, tour, package, date, place, amount } = req.body;
-
+  console.log(amount)
   validateMongoDbId(college);
   validateMongoDbId(tour);
   validateMongoDbId(package);
-  console.log(req.body);
 
   try {
     // Check if the college is already booked at the same place on the same date
@@ -110,7 +109,7 @@ const createBooking = asyncHandler(async (req, res) => {
       package,
       date,
       place,
-      amount,
+      price:amount,
     });
     await booking.save();
     res.status(201).json(booking);

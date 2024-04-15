@@ -8,6 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const TourLogin = () => {
   const [serverError, setServerError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -41,6 +42,10 @@ const TourLogin = () => {
       console.log(error);
     }
     // resetForm();
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -89,7 +94,7 @@ const TourLogin = () => {
                   <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <Field
-                      type="password"
+                      type={showPassword ? "text" : "password"} // Conditionally set the type based on showPassword state
                       id="password"
                       name="password"
                       className="form-control"
@@ -100,9 +105,19 @@ const TourLogin = () => {
                       className="text-danger"
                     />
                   </div>
-                  <button type="submit" className="btn btn-primary mt-3">
-                    Submit
+                  <button
+                    type="button"
+                    className="btn btn-secondary mb-3"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? "Hide Password" : "Show Password"}
                   </button>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <button type="submit" className="btn btn-primary mt-3">
+                      Submit
+                    </button>
+                    <Link to={"/tour/forget-password"}>Forget Password</Link>
+                  </div>
                 </Form>
               </Formik>
             </div>

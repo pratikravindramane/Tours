@@ -40,7 +40,7 @@ const Footer = () => {
         <hr />
         <div className="row mt-3">
           <div className="col">
-            <p className="text-center">&copy; 2024 Sport Event Management</p>
+            <p className="text-center">&copy; 2024 Tour Management</p>
           </div>
         </div>
       </div>

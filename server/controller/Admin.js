@@ -58,7 +58,7 @@ const createPlace = async (req, res) => {
     const place = new Places({
       location,
       image: imgPath,
-      address
+      address,
     });
     await place.save();
     res.status(201).json(place);
@@ -77,6 +77,15 @@ const viewContact = async (req, res) => {
   }
 };
 
+// Function to view all tours
+const viewTour = async (req, res) => {
+  try {
+    const tours = await Tour.find();
+    res.json(tours);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 // Function to view all payments
 const viewBookings = async (req, res) => {
   try {
@@ -90,7 +99,7 @@ const viewBookings = async (req, res) => {
 // Function to view all packages
 const viewPackages = async (req, res) => {
   try {
-    const packages = await Package.find({});
+    const packages = await Package.find({}).populate("tour").populate("place");
     res.json(packages);
   } catch (err) {
     throw new Error(err);
@@ -115,4 +124,5 @@ module.exports = {
   viewContact,
   adminLogin,
   register,
+  viewTour
 };

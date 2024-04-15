@@ -5,7 +5,8 @@ const {
   viewColleges,
   viewPackages,
   adminLogin,
-  register
+  register,
+  viewTour,
 } = require("../controller/Admin");
 const { authMiddleware, isAdmin } = require("../middleware/authMiddleware");
 const router = require("express").Router();
@@ -22,6 +23,7 @@ router.post(
 router.post("/create-place", authMiddleware, isAdmin, createPlace);
 router.post("/register", register);
 router.get("/view-contacts", authMiddleware, isAdmin, viewContact);
+router.get("/view-tours", authMiddleware, isAdmin, viewTour);
 router.get("/view-bookings", authMiddleware, isAdmin, viewBookings);
 router.get("/view-colleges", authMiddleware, isAdmin, viewColleges);
 router.get("/view-packages", authMiddleware, isAdmin, viewPackages);

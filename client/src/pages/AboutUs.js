@@ -1,5 +1,6 @@
 // AboutUsPage.js
 import React from "react";
+import image from "../assets/bg.jpg";
 
 const AboutUsPage = () => {
   return (
@@ -8,50 +9,41 @@ const AboutUsPage = () => {
       <div className="row">
         <div className="col-md-6">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJRu-zYFwoSJxDpt8rj8HVgUUtcVlWtTEz81zM1aE8gVcKmnhlkKn42MmCHZ85z0VzI_I&usqp=CAU"
+            src={image}
             width={"100%"}
-            className="img-fluid"
+            className="img-fluid rounded"
             alt="About Us"
           />
         </div>
         <div className="col-md-6">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            vestibulum, leo non interdum faucibus, libero enim varius nisl, nec
-            pharetra sem arcu non nisi. Nulla facilisi.
-          </p>
-          <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
-          </p>
-          <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
+            With years of experience in the travel industry, [Your Traveling
+            Website Name] is dedicated to providing immersive and insightful
+            experiences for college students. Our team of experts curates
+            educational tours that offer invaluable insights into various
+            industries, allowing students to witness firsthand the processes,
+            technologies, and innovations driving modern businesses.
           </p>
           <br />
+          <b>Why Us?</b>
           <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
+            Tailored Experiences: We work closely with colleges to design
+            customized itineraries that align with their academic goals and
+            interests.
+            <br />
+            Industry Connections: Through our extensive network of industry
+            partners, we provide exclusive access to renowned companies and
+            organizations across diverse sectors.
+            <br />
+            Educational Value: Our tours are designed to complement classroom
+            learning by offering practical insights and real-world applications
+            of theoretical concepts.
+            <br />
+            Safety and Comfort: The safety and comfort of our travelers are our
+            top priorities. We ensure seamless travel arrangements and adhere to
+            the highest standards of safety protocols.
           </p>
-          <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
-          </p>
-          <br />
-          <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
-          </p>
-          <p>
-            Suspendisse potenti. Vivamus varius velit nec nunc sodales, sit amet
-            viverra enim dictum. In non aliquam leo. Ut convallis nisi velit, ut
-            venenatis mauris viverra in.
-          </p>
+
         </div>
       </div>
     </div>
