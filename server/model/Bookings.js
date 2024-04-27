@@ -18,7 +18,7 @@ const BookingSchema = new Schema(
       ref: "Package",
       required: true,
     },
-    place:{
+    place: {
       type: Schema.Types.ObjectId,
       ref: "Place",
       required: true,
@@ -26,6 +26,8 @@ const BookingSchema = new Schema(
     date: { type: String, require: true },
     time: { type: String, require: true },
     price: { type: Number, require: true },
+    peoples: { type: Number },
+    mode: { type: String },
   },
   { timestamps: true }
 );

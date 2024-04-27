@@ -4,15 +4,17 @@ import { backendLocation } from "../config";
 import moment from "moment";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+
 const Package = ({ pkg, a, place }) => {
   const [amount, setAmount] = useState(a);
   const [people, setPeople] = useState(1);
   const [serverError, setServerError] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [mode, setMode] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decode = jwtDecode(token);
-  console.log(amount)
+
   const createOrder = async () => {
     try {
       const response = await axios.post(
@@ -26,6 +28,7 @@ const Package = ({ pkg, a, place }) => {
       console.error(error);
     }
   };
+
   const bookHandler = async (id, tour) => {
     await createOrder();
     const options = {
@@ -48,6 +51,8 @@ const Package = ({ pkg, a, place }) => {
             tour,
             amount: amount,
             place: place._id,
+            peoples: people,
+            mode,
           },
           {
             headers: {
@@ -77,63 +82,64 @@ const Package = ({ pkg, a, place }) => {
     const paymentObject = new window.Razorpay(options);
     await paymentObject.open();
   };
-  return (
-    <div className="card-body">
-      {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
-      )}
-      <div className="d-flex justify-content-between my-3">
-        <select
-          name=""
-          id=""
-          onChange={(e) => setAmount(e.target.value * people)}
-        >
-          {pkg.mode?.bus && (
-            <option value={pkg.mode?.bus}>Bus {pkg.mode?.bus}</option>
-          )}
-          {pkg.mode?.train && (
-            <option value={pkg.mode?.train}>Train {pkg.mode?.train}</option>
-          )}
-          {pkg.mode?.airline && (
-            <option value={pkg.mode?.airline}>
-              Airline {pkg.mode?.airline}
-            </option>
-          )}
-        </select>
-        <div className="d-grid">
-          <label htmlFor="noOfPeople">Peoples</label>
-          <input
-            type="number"
-            id="noOfPeople"
-            min={1}
-            onChange={(e) => {
-              setPeople(e.target.value);
-              setAmount(amount * e.target.value);
-            }}
-          />
-        </div>
-      </div>
-      <h4>{`Total Price ${amount}`}</h4>
 
-      <button
-        onClick={() => bookHandler(pkg._id, pkg.tour)}
-        className="btn btn-primary"
-      >
-        Book
-      </button>
+  return (
+    <div className="card mb-4">
+      <div className="card-body">
+        {serverError && (
+          <div className="alert alert-danger" role="alert">
+            {serverError}
+            <button
+              onClick={() => setServerError(false)}
+              className="btn-close"
+              aria-label="Close"
+            ></button>
+          </div>
+        )}
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <select
+            className="form-select"
+            onChange={(e) => {
+              setAmount(pkg.mode[e.target.value] * people);
+              setMode(e.target.value);
+            }}
+          >
+            {pkg.mode?.bus && (
+              <option value={"bus"}>Bus {pkg.mode?.bus}</option>
+            )}
+            {pkg.mode?.train && (
+              <option value={"train"}>Train {pkg.mode?.train}</option>
+            )}
+            {pkg.mode?.airline && (
+              <option value={"airline"}>Airline {pkg.mode?.airline}</option>
+            )}
+          </select>
+          <div className="d-grid mx-3">
+            <label htmlFor="noOfPeople" className="mb-0">
+              People
+            </label>
+            <input
+              type="number"
+              id="noOfPeople"
+              className="form-control"
+              min={1}
+              value={people}
+              onChange={(e) => {
+                setPeople(e.target.value);
+                setAmount(amount * e.target.value);
+              }}
+            />
+          </div>
+          <h6 className="mb-0">{`Total Price: ${amount}`}</h6>
+        </div>
+
+        <button
+          onClick={() => bookHandler(pkg._id, pkg.tour)}
+          className="btn btn-primary"
+        >
+          Book Now
+        </button>
+      </div>
     </div>
   );
 };

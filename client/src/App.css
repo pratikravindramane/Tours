@@ -193,7 +193,8 @@ th {
 }
 
 .place-card {
-  background-color: #f0f0f0;
+  background-color: #000000c4;
+  color: rgb(255, 255, 255);
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -215,12 +216,15 @@ th {
 }
 
 .place-details h3 {
+  font-size: 18px;
   margin-top: 0;
   margin-bottom: 5px;
 }
 
 .place-details p {
   margin: 0;
+  color: rgb(213, 213, 213);
+  font-size: 12px;
 }
 
 /* places ended */

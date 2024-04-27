@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const TourLogin = () => {
   const [serverError, setServerError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -41,7 +41,6 @@ const TourLogin = () => {
     } catch (error) {
       console.log(error);
     }
-    // resetForm();
   };
 
   const togglePasswordVisibility = () => {
@@ -49,24 +48,19 @@ const TourLogin = () => {
   };
 
   return (
-    <div className="container mt-5 view-height">
+    <div className="container mt-5 py-5">
       {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
+        <div className="alert alert-danger" role="alert">
+          {serverError}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setServerError(false)}
+          ></button>
+        </div>
       )}
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mt-3">
         <div className="col-md-6">
           <div className="card">
             <div className="card-body">
@@ -77,8 +71,10 @@ const TourLogin = () => {
                 onSubmit={handleSubmit}
               >
                 <Form>
-                  <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
                     <Field
                       type="email"
                       id="email"
@@ -91,32 +87,43 @@ const TourLogin = () => {
                       className="text-danger"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <Field
-                      type={showPassword ? "text" : "password"} // Conditionally set the type based on showPassword state
-                      id="password"
-                      name="password"
-                      className="form-control"
-                    />
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <div className="input-group">
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        className="form-control"
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
                     <ErrorMessage
                       name="password"
                       component="div"
                       className="text-danger"
                     />
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-secondary mb-3"
                     onClick={togglePasswordVisibility}
                   >
                     {showPassword ? "Hide Password" : "Show Password"}
-                  </button>
+                  </button> */}
                   <div className="d-flex justify-content-between align-items-center">
-                    <button type="submit" className="btn btn-primary mt-3">
+                    <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
-                    <Link to={"/tour/forget-password"}>Forget Password</Link>
+                    <Link to={"/tour/forget-password"}>Forgot Password?</Link>
                   </div>
                 </Form>
               </Formik>

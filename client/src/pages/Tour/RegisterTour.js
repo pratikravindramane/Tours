@@ -32,41 +32,35 @@ const TourRegister = () => {
 
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to control visibility of password
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const newEmployee = await axios.post(`${backendLocation}/tour/register`, {
+      const newTour = await axios.post(`${backendLocation}/tour/register`, {
         ...values,
       });
-      if (newEmployee.data.message) {
-        setServerError(newEmployee.data.message);
+      if (newTour.data.message) {
+        setServerError(newTour.data.message);
       } else {
         navigate("/tour/login");
       }
     } catch (error) {
       console.log(error);
     }
-    // resetForm();
   };
 
   return (
     <div className="container mt-5">
       {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
+        <div className="alert alert-danger" role="alert">
+          {serverError}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setServerError(false)}
+          ></button>
+        </div>
       )}
       <div className="row justify-content-center">
         <div className="col-md-6">
@@ -80,8 +74,10 @@ const TourRegister = () => {
               >
                 {({ errors, touched }) => (
                   <Form>
-                    <div className="form-group">
-                      <label htmlFor="name">Name</label>
+                    <div className="mb-3">
+                      <label htmlFor="name" className="form-label">
+                        Name
+                      </label>
                       <Field
                         type="text"
                         name="name"
@@ -96,8 +92,10 @@ const TourRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
                       <Field
                         type="email"
                         name="email"
@@ -112,8 +110,10 @@ const TourRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="phone">Phone</label>
+                    <div className="mb-3">
+                      <label htmlFor="phone" className="form-label">
+                        Phone
+                      </label>
                       <Field
                         type="text"
                         name="phone"
@@ -128,9 +128,11 @@ const TourRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <div className="password-input-container">
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label">
+                        Password
+                      </label>
+                      <div className="input-group">
                         <Field
                           type={showPassword ? "text" : "password"}
                           name="password"
@@ -143,16 +145,16 @@ const TourRegister = () => {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="btn btn-sm btn-secondary mt-1"
+                          className="btn btn-outline-secondary"
                         >
                           {showPassword ? "Hide" : "Show"}
                         </button>
+                      </div>
                       <ErrorMessage
                         name="password"
                         component="div"
                         className="invalid-feedback"
                       />
-                      </div>
                     </div>
 
                     <button type="submit" className="btn btn-primary">

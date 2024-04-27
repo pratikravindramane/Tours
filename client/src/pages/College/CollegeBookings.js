@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
 import { backendLocation } from "../../config";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+
 const CollegeBookings = () => {
   const [bookings, setCollegeBookings] = useState([]);
   const [serverError, setServerError] = useState(false);
@@ -26,7 +27,9 @@ const CollegeBookings = () => {
         } else {
           setCollegeBookings(response?.data);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetch();
   }, []);
@@ -42,40 +45,46 @@ const CollegeBookings = () => {
                 e.preventDefault();
                 setServerError(false);
               }}
-              className="button border border-dark bg-danger"
+              className="btn btn-danger"
             >
               ok
             </button>
           </div>
         </>
       )}
-      <h1>View College Bookings</h1>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Tour</th>
-            <th>Place</th>
-            <th>Package</th>
-            <th>Starts From</th>
-            <th>Duration</th>
-            <th>Date</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bookings.map((e) => (
-            <tr key={e._id}>
-              <td>{e?.tour?.name}</td>
-              <td>{e?.place?.location}</td>
-              <td>{e?.package?.name}</td>
-              <td>{e?.package?.startPoint}</td>
-              <td>{e?.package?.duration}</td>
-              <td>{e?.date}</td>
-              <td>{e?.package?.price}</td>
+      <h1 className="mb-4">View College Bookings</h1>
+      <div className="table-responsive">
+        <table className="table table-striped table-bordered">
+          <thead className="table-dark">
+            <tr>
+              <th>Tour</th>
+              <th>Place</th>
+              <th>Package</th>
+              <th>Starts From</th>
+              <th>Duration</th>
+              <th>Mode</th>
+              <th>Peoples</th>
+              <th>Date</th>
+              <th>Price</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {bookings.map((booking) => (
+              <tr key={booking._id}>
+                <td>{booking?.tour?.name}</td>
+                <td>{booking?.place?.location}</td>
+                <td>{booking?.package?.name}</td>
+                <td>{booking?.package?.startPoint}</td>
+                <td>{booking?.package?.duration}</td>
+                <td>{booking?.mode}</td>
+                <td>{booking?.peoples}</td>
+                <td>{booking?.date}</td>
+                <td>₹{booking?.package?.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

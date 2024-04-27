@@ -19,9 +19,9 @@ const CollegeRegister = () => {
     email: Yup.string().email("Invalid email").required("Email is required"),
     phone: Yup.string()
       .required("Phone is required")
-      .matches(/^[0-9]{10}$/, "Password must be exactly 10 digits long"),
+      .matches(/^[0-9]{10}$/, "Phone must be exactly 10 digits long"),
     password: Yup.string()
-      .required("New Password is required")
+      .required("Password is required")
       .min(8, "Password must be at least 8 characters")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -32,44 +32,36 @@ const CollegeRegister = () => {
 
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to control visibility of password
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      const newEmployee = await axios.post(
+      const newCollege = await axios.post(
         `${backendLocation}/college/register`,
-        {
-          ...values,
-        }
+        values
       );
-      if (newEmployee.data.message) {
-        setServerError(newEmployee.data.message);
+      if (newCollege.data.message) {
+        setServerError(newCollege.data.message);
       } else {
         navigate("/login");
       }
     } catch (error) {
       console.log(error);
     }
-    // resetForm();
   };
 
   return (
     <div className="container mt-5">
       {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
+        <div className="alert alert-danger" role="alert">
+          {serverError}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setServerError(false)}
+          ></button>
+        </div>
       )}
       <div className="row justify-content-center">
         <div className="col-md-6">
@@ -83,8 +75,10 @@ const CollegeRegister = () => {
               >
                 {({ errors, touched }) => (
                   <Form>
-                    <div className="form-group">
-                      <label htmlFor="name">Name</label>
+                    <div className="mb-3">
+                      <label htmlFor="name" className="form-label">
+                        Name
+                      </label>
                       <Field
                         type="text"
                         name="name"
@@ -99,8 +93,10 @@ const CollegeRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
                       <Field
                         type="email"
                         name="email"
@@ -115,8 +111,10 @@ const CollegeRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="phone">Phone</label>
+                    <div className="mb-3">
+                      <label htmlFor="phone" className="form-label">
+                        Phone
+                      </label>
                       <Field
                         type="text"
                         name="phone"
@@ -131,9 +129,11 @@ const CollegeRegister = () => {
                       />
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <div className="password-input-container">
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label">
+                        Password
+                      </label>
+                      <div className="input-group">
                         <Field
                           type={showPassword ? "text" : "password"}
                           name="password"
@@ -146,20 +146,22 @@ const CollegeRegister = () => {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="btn btn-sm btn-primary mt-1"
+                          className="btn btn-outline-secondary"
                         >
                           {showPassword ? "Hide" : "Show"}
                         </button>
+                      </div>
                       <ErrorMessage
                         name="password"
                         component="div"
                         className="invalid-feedback"
                       />
-                      </div>
                     </div>
 
-                    <div className="form-group">
-                      <label htmlFor="address">Address</label>
+                    <div className="mb-3">
+                      <label htmlFor="address" className="form-label">
+                        Address
+                      </label>
                       <Field
                         type="text"
                         name="address"

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 const Navbar = () => {
   const { isLoggedIn, role, logout } = useAuth();
   const navigate = useNavigate();
@@ -82,7 +81,7 @@ const Navbar = () => {
                   localStorage.removeItem("token");
                   navigate("/");
                 }}
-                className="bg-transparent py-2 px-3 border-0"
+                className="bg-transparent py-2 px-3 border-0 text-danger"
               >
                 Logout
               </button>
@@ -128,7 +127,7 @@ const Navbar = () => {
                   localStorage.removeItem("token");
                   navigate("/");
                 }}
-                className="bg-transparent py-2 px-3 border-0"
+                className="bg-transparent py-2 px-3 border-0  text-danger"
               >
                 Logout
               </button>
@@ -154,7 +153,7 @@ const Navbar = () => {
                   localStorage.removeItem("token");
                   navigate("/");
                 }}
-                className="bg-transparent py-2 px-3 border-0"
+                className="bg-transparent py-2 px-3 border-0 text-danger"
               >
                 Logout
               </button>

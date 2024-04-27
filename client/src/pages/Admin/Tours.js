@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
 import { backendLocation } from "../../config";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+
 const Tours = () => {
   const [tours, setTours] = useState([]);
   const [serverError, setServerError] = useState(false);
@@ -9,7 +10,7 @@ const Tours = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchTours = async () => {
       try {
         const response = await axios.get(
           `${backendLocation}/admin/view-tours`,
@@ -25,37 +26,33 @@ const Tours = () => {
         } else {
           setTours(response?.data);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
-    fetch();
+    fetchTours();
   }, [token]);
 
   return (
     <div className="container mt-5 view-height">
       {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
+        <div className="alert alert-danger" role="alert">
+          {serverError}
+          <button
+            onClick={() => setServerError(false)}
+            className="btn-close"
+            aria-label="Close"
+          ></button>
+        </div>
       )}
       <h1>View Tours</h1>
-      <table className="table">
-        <thead>
+      <table className="table table-striped">
+        <thead className="table-dark">
           <tr>
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Action</th>
+            {/* <th>Action</th> */}
           </tr>
         </thead>
         <tbody>
@@ -64,7 +61,11 @@ const Tours = () => {
               <td>{e.name}</td>
               <td>{e.email}</td>
               <td>{e.phone}</td>
-              <Link to={`/tour/${e._id}`}>View</Link>
+              <td>
+                {/* <Link to={`/tour/${e._id}`} className="btn btn-primary">
+                  View
+                </Link> */}
+              </td>
             </tr>
           ))}
         </tbody>

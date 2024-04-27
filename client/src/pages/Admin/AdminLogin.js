@@ -9,7 +9,7 @@ import { backendLocation } from "../../config";
 function AdminLogin() {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -41,72 +41,94 @@ function AdminLogin() {
   };
 
   return (
-    <div className="login">
-      {serverError && (
-        <>
-          <div className="error-div">
-            <p>{serverError}</p>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setServerError(false);
-              }}
-              className="button border border-dark bg-danger"
-            >
-              ok
-            </button>
-          </div>
-        </>
-      )}
-      <div>
-        <h1 className="mb-0">Admin Login</h1>
-        <hr className="my-0" />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validateLogin}
-          onSubmit={handleSubmit}
-        >
-          {({ dirty, isValid }) => (
-            <Form>
-              <div className="d-grid mt-1">
-                <label htmlFor="email">Email</label>
-                <Field type="email" id="email" name="email" />
-                <ErrorMessage name="email" component="div" className="error" />
-              </div>
-              <div className="d-grid mt-3">
-                <label htmlFor="password">Password</label>
-                <Field
-                  type={showPassword ? "text" : "password"} // Conditionally set the type based on showPassword state
-                  id="password"
-                  name="password"
-                />
-                <button
-                  type="button"
-                  className="toggle-password"
-                  onClick={togglePasswordVisibility}
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="error"
-                />
-              </div>
-              <div className="d-flex justify-content-between align-items-center mt-3">
-                <div className="d-flex justify-content-between align-items-center">
-                  <button type="submit" className="btn btn-primary mt-3">
-                    Submit
-                  </button>
-                  <Link to={"/admin/forget-password"}>Forget Password</Link>
-                </div>
-                <Link className="button" to={"/"}>
-                  Back
-                </Link>
-              </div>
-            </Form>
+    <div className="container mt-5 py-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-6">
+          {serverError && (
+            <div className="alert alert-danger" role="alert">
+              {serverError}
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close"
+                onClick={() => setServerError(false)}
+              ></button>
+            </div>
           )}
-        </Formik>
+          <div className="card">
+            <div className="card-body">
+              <h1 className="mb-4">Admin Login</h1>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validateLogin}
+                onSubmit={handleSubmit}
+              >
+                {({ dirty, isValid }) => (
+                  <Form>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">
+                        Email
+                      </label>
+                      <Field
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="form-control"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="div"
+                        className="error text-danger"
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label">
+                        Password
+                      </label>
+                      <div className="input-group">
+                        <Field
+                          type={showPassword ? "text" : "password"}
+                          id="password"
+                          name="password"
+                          className="form-control"
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? "Hide" : "Show"}
+                        </button>
+                      </div>
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="error text-danger"
+                      />
+                    </div>
+                    <div className="mb-3 d-flex justify-content-between">
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={!dirty || !isValid}
+                      >
+                        Submit
+                      </button>
+                      <Link to={"/admin/forget-password"}>
+                        Forgot Password?
+                      </Link>
+                    </div>
+                    <div>
+                      <Link to={"/"} className="btn btn-link">
+                        Back
+                      </Link>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

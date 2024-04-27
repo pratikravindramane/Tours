@@ -54,7 +54,7 @@ const PackageModal = ({ show, handleClose, data }) => {
         handleClose();
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error creating package:", error);
     }
   };
 
@@ -84,7 +84,7 @@ const PackageModal = ({ show, handleClose, data }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Add New Item</h5>
-            <button type="button" className="close" onClick={handleClose}>
+            <button type="button" className="close btn btn-danger" onClick={handleClose}>
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -96,8 +96,10 @@ const PackageModal = ({ show, handleClose, data }) => {
             >
               {({ errors, touched }) => (
                 <Form>
-                  <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                  <div className="mb-3">
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
                     <Field
                       type="text"
                       name="name"
@@ -111,8 +113,10 @@ const PackageModal = ({ show, handleClose, data }) => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="duration">Duration Days</label>
+                  <div className="mb-3">
+                    <label htmlFor="duration" className="form-label">
+                      Duration Days
+                    </label>
                     <Field
                       type="number"
                       name="duration"
@@ -126,8 +130,10 @@ const PackageModal = ({ show, handleClose, data }) => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="startPoint">Start Point</label>
+                  <div className="mb-3">
+                    <label htmlFor="startPoint" className="form-label">
+                      Start Point
+                    </label>
                     <Field
                       type="text"
                       name="startPoint"
@@ -143,8 +149,10 @@ const PackageModal = ({ show, handleClose, data }) => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="bus">Bus Price</label>
+                  <div className="mb-3">
+                    <label htmlFor="bus" className="form-label">
+                      Bus Price
+                    </label>
                     <Field
                       type="number"
                       name="bus"
@@ -158,8 +166,10 @@ const PackageModal = ({ show, handleClose, data }) => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="train">Train Price</label>
+                  <div className="mb-3">
+                    <label htmlFor="train" className="form-label">
+                      Train Price
+                    </label>
                     <Field
                       type="number"
                       name="train"
@@ -173,8 +183,10 @@ const PackageModal = ({ show, handleClose, data }) => {
                       className="invalid-feedback"
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="airline">Airline Price</label>
+                  <div className="mb-3">
+                    <label htmlFor="airline" className="form-label">
+                      Airline Price
+                    </label>
                     <Field
                       type="number"
                       name="airline"

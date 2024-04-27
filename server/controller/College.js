@@ -87,7 +87,7 @@ const viewCollegeBooking = asyncHandler(async (req, res) => {
 
 // Function to create a new booking
 const createBooking = asyncHandler(async (req, res) => {
-  const { college, tour, package, date, place, amount } = req.body;
+  const { college, tour, package, date, place, amount,peoples,mode } = req.body;
   console.log(amount)
   validateMongoDbId(college);
   validateMongoDbId(tour);
@@ -110,6 +110,8 @@ const createBooking = asyncHandler(async (req, res) => {
       date,
       place,
       price:amount,
+      peoples,
+      mode
     });
     await booking.save();
     res.status(201).json(booking);
