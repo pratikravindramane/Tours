@@ -12,7 +12,7 @@ const PlacesPage = () => {
     // Fetch places data from the server
     const fetchPlaces = async () => {
       try {
-        const {data}= await axios.get(`${backendLocation}/places`); // Replace "/api/places" with your actual API endpoint
+        const { data } = await axios.get(`${backendLocation}/places`); // Replace "/api/places" with your actual API endpoint
         if (data.message) {
           setServerError(data.message);
         } else {
@@ -33,7 +33,7 @@ const PlacesPage = () => {
   };
 
   return (
-    <div className="places-container">
+    <div className="places-container" style={{ minHeight: "80vh" }}>
       {serverError && (
         <>
           <div className="error-div">

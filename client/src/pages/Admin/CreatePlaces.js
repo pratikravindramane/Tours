@@ -29,6 +29,7 @@ const AddPlaceForm = () => {
 
     const token = localStorage.getItem("token");
     try {
+      console.log(formData)
       const response = await axios.post(
         `${backendLocation}/admin/create-place`,
         formData,
@@ -52,7 +53,7 @@ const AddPlaceForm = () => {
     }
   };
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ minHeight: "80vh" }}>
       {serverError && (
         <>
           <div className="error-div">
@@ -78,7 +79,9 @@ const AddPlaceForm = () => {
         {({ errors, touched, setFieldValue }) => (
           <Form>
             <div className="form-group">
-              <label htmlFor="location">Location</label>
+              <label htmlFor="location" className="text-dark">
+                Location
+              </label>
               <Field
                 type="text"
                 name="location"
@@ -94,7 +97,9 @@ const AddPlaceForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="image">Image</label>
+              <label htmlFor="image" className="text-dark">
+                Image
+              </label>
               <input
                 type="file"
                 name="image"
@@ -114,7 +119,9 @@ const AddPlaceForm = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="address">Address</label>
+              <label htmlFor="address" className="text-dark">
+                Address
+              </label>
               <Field
                 type="text"
                 name="address"

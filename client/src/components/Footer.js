@@ -9,13 +9,22 @@ const Footer = () => {
             <h5>Follow Us</h5>
             <ul className="list-inline d-grid">
               <li className="list-inline-item">
-                <a href="https://www.facebook.com">Facebook</a>
+                <a href="https://www.facebook.com" style={{ color: "#008080" }}>
+                  Facebook
+                </a>
               </li>
               <li className="list-inline-item">
-                <a href="https://www.twitter.com">Twitter</a>
+                <a href="https://www.twitter.com" style={{ color: "#008080" }}>
+                  Twitter
+                </a>
               </li>
               <li className="list-inline-item">
-                <a href="https://www.instagram.com">Instagram</a>
+                <a
+                  href="https://www.instagram.com"
+                  style={{ color: "#008080" }}
+                >
+                  Instagram
+                </a>
               </li>
             </ul>
           </div>
@@ -23,16 +32,16 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/aboutus">About Us</a>
+                <a href="/aboutus" style={{ color: "#008080" }}>About Us</a>
               </li>
               <li>
-                <a href="/contactus">Contact Us</a>
+                <a href="/contactus" style={{ color: "#008080" }}>Contact Us</a>
               </li>
               <li>
-                <a href="/login">Login</a>
+                <a href="/login" style={{ color: "#008080" }}>Login</a>
               </li>
               <li>
-                <a href="/signup">Signup</a>
+                <a href="/signup" style={{ color: "#008080" }}>Signup</a>
               </li>
             </ul>
           </div>

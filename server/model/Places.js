@@ -6,8 +6,6 @@ var PlacesSchema = new mongoose.Schema(
     location: {
       type: String,
       required: true,
-      unique: true,
-      index: true,
     },
     image: {
       type: String,

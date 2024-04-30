@@ -49,7 +49,7 @@ const register = asyncHandler(async (req, res) => {
   }
 });
 const createPlace = async (req, res) => {
-  const { location } = req.body;
+  const { location, address } = req.body;
   try {
     let imgPath = "";
     if (req.file) {
@@ -124,5 +124,5 @@ module.exports = {
   viewContact,
   adminLogin,
   register,
-  viewTour
+  viewTour,
 };

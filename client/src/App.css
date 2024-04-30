@@ -12,6 +12,7 @@
 }
 body {
   font-family: "Rubix", sans-serif;
+  background-color: #008080;
   /* background-color: var(--color1); */
 }
 .view-height {
@@ -48,6 +49,9 @@ p {
   background-color: rgb(12, 137, 12);
 }
 /* header started */
+.navbar{
+  background-color: #002e2e !important;
+}
 .header {
   background-color: var(--color2);
 }
