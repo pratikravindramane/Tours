@@ -30,7 +30,6 @@ const PlacesPage = () => {
     // Navigate to the details page of the clicked place
     // Implement your navigation logic here
     navigate("/place/" + placeId);
-    console.log("Clicked place:", placeId);
   };
 
   const deleteHandler = async (id) => {

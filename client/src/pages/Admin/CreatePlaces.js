@@ -29,7 +29,6 @@ const AddPlaceForm = () => {
 
     const token = localStorage.getItem("token");
     try {
-      console.log(formData)
       const response = await axios.post(
         `${backendLocation}/admin/create-place`,
         formData,

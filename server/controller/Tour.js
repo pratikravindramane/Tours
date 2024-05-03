@@ -58,7 +58,6 @@ const register = asyncHandler(async (req, res) => {
 // Function to create a new package
 const createPackage = asyncHandler(async (req, res) => {
   const { train, bus, airline } = req.body;
-  console.log(req.body)
   try {
     const package = new Package({
       ...req.body,

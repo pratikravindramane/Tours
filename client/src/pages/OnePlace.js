@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { backendLocation } from "../config";
 import { useAuth } from "../context/AuthContext";
 import PackageModal from "./Tour/PackageModal";
@@ -33,7 +33,6 @@ const PlacePage = () => {
         } else {
           setPlace(response?.data?.place);
           setPackages(response?.data?.packages);
-          console.log(response.data.packages);
         }
       } catch (error) {}
     };

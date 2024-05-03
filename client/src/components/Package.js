@@ -11,14 +11,13 @@ const Package = ({ pkg, a, place }) => {
   const [serverError, setServerError] = useState(false);
   const [travelFees, setTravelFees] = useState(a);
   const [orderId, setOrderId] = useState("");
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState("bus");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const decode = jwtDecode(token);
 
   const createOrder = async () => {
     try {
-      console.log({ amount: travelFees * people });
       const response = await axios.post(
         `${backendLocation}/college/create-order`,
         {
@@ -27,6 +26,10 @@ const Package = ({ pkg, a, place }) => {
           college: decode.id,
         }
       );
+      if(response.data.message){
+        setServerError(response.data.message)
+        return
+      }
       setOrderId(response.data.id);
     } catch (error) {
       console.error(error);
@@ -44,7 +47,6 @@ const Package = ({ pkg, a, place }) => {
       image: "https://example.com/your_logo.png",
       order_id: orderId,
       handler: async (response) => {
-        console.log(response);
         // Handle success
         const res = await axios.post(
           `${backendLocation}/college/create-booking`,
