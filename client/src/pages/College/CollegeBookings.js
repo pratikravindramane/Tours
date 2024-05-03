@@ -79,7 +79,7 @@ const CollegeBookings = () => {
                 <td>{booking?.mode}</td>
                 <td>{booking?.peoples}</td>
                 <td>{booking?.date}</td>
-                <td>₹{booking?.package?.price}</td>
+                <td>₹{booking?.price}</td>
               </tr>
             ))}
           </tbody>

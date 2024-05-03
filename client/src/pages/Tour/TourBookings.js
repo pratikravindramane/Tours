@@ -54,6 +54,7 @@ const TourBookings = () => {
             <th>Package</th>
             <th>Starts From</th>
             <th>Duration</th>
+            <th>mode</th>
             <th>Date</th>
             <th>Price</th>
           </tr>
@@ -66,8 +67,9 @@ const TourBookings = () => {
               <td>{e?.package?.name}</td>
               <td>{e?.package?.startPoint}</td>
               <td>{e?.package?.duration}</td>
+              <td>{e?.mode}</td>
               <td>{e?.date}</td>
-              <td>{e?.package?.price}</td>
+              <td>{e?.price}</td>
             </tr>
           ))}
         </tbody>

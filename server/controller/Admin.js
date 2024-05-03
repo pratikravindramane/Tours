@@ -116,6 +116,17 @@ const viewColleges = async (req, res) => {
   }
 };
 
+// delete Places
+const deletePlace = asyncHandler(async (req, res) => {
+  try {
+    const users = await Places.findByIdAndDelete(req.params.id);
+    if (!users) throw new Error("No Place Found!");
+    res.send("Deleted Successfully");
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = {
   createPlace,
   viewBookings,
@@ -125,4 +136,5 @@ module.exports = {
   adminLogin,
   register,
   viewTour,
+  deletePlace,
 };

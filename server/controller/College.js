@@ -5,6 +5,12 @@ const Bookings = require("../model/Bookings");
 const bcrypt = require("bcrypt");
 const genrateToken = require("../utils/genrateToken");
 const validateMongoDbId = require("../utils/validateMongoDbId");
+const razorpay = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRECT,
+});
+const Razorpay = require("razorpay");
+
 // Student controller methods
 
 // login
@@ -85,10 +91,38 @@ const viewCollegeBooking = asyncHandler(async (req, res) => {
   }
 });
 
+// create Order
+const createOrder = asyncHandler(async (req, res) => {
+  try {
+    const { amount, college, date } = req.body;
+    // Check if the college is already booked at the same place on the same date
+    const existingBooking = await Bookings.findOne({ college, date });
+    if (existingBooking) {
+      throw new Error(
+        "College already booked at the same place on the same date"
+      );
+    }
+    const options = {
+      amount: amount * 100, // Razorpay expects amount in paise
+      currency: "INR",
+      receipt: "receipt#1",
+      payment_capture: 1,
+    };
+
+    // Create an order using Razorpay instance
+    const order = await razorpay.orders.create(options);
+    res.json(order);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+});
+
 // Function to create a new booking
 const createBooking = asyncHandler(async (req, res) => {
-  const { college, tour, package, date, place, amount,peoples,mode } = req.body;
-  console.log(amount)
+  const { college, tour, package, date, place, amount, peoples, mode } =
+    req.body;
+  console.log(req.body);
   validateMongoDbId(college);
   validateMongoDbId(tour);
   validateMongoDbId(package);
@@ -109,9 +143,9 @@ const createBooking = asyncHandler(async (req, res) => {
       package,
       date,
       place,
-      price:amount,
+      price: amount,
       peoples,
-      mode
+      mode,
     });
     await booking.save();
     res.status(201).json(booking);

@@ -53,17 +53,21 @@ const Packages = () => {
             <th>Place</th>
             <th>Start From</th>
             <th>Duration</th>
-            <th>Price</th>
+            <th>Bus</th>
+            <th>Train</th>
+            <th>Airline</th>
           </tr>
         </thead>
         <tbody>
           {packages.map((pkg) => (
             <tr key={pkg._id}>
-              <td>{pkg.name}</td>
-              <td>{pkg.place.location}</td>
-              <td>{pkg.startPoint}</td>
-              <td>{pkg.duration}</td>
-              <td>${pkg.price}</td>
+              <td>{pkg?.name}</td>
+              <td>{pkg?.place?.location}</td>
+              <td>{pkg?.startPoint}</td>
+              <td>{pkg?.duration}</td>
+              <td>₹{pkg.mode.bus || "-"}</td>
+              <td>₹{pkg.mode.train || "-"}</td>
+              <td>₹{pkg.mode.airline || "-"}</td>
             </tr>
           ))}
         </tbody>

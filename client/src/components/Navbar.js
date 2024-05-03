@@ -115,11 +115,11 @@ const Navbar = () => {
                   Tours
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/contacts" className="nav-link">
                   Contacts
                 </Link>
-              </li>
+              </li> */}
               <button
                 onClick={(e) => {
                   e.preventDefault();

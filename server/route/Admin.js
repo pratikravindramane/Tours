@@ -7,6 +7,7 @@ const {
   adminLogin,
   register,
   viewTour,
+  deletePlace,
 } = require("../controller/Admin");
 const { authMiddleware, isAdmin } = require("../middleware/authMiddleware");
 const router = require("express").Router();
@@ -27,5 +28,6 @@ router.get("/view-tours", authMiddleware, isAdmin, viewTour);
 router.get("/view-bookings", authMiddleware, isAdmin, viewBookings);
 router.get("/view-colleges", authMiddleware, isAdmin, viewColleges);
 router.get("/view-packages", authMiddleware, isAdmin, viewPackages);
+router.delete("/delete/place/:id", authMiddleware, isAdmin, deletePlace);
 
 module.exports = router;

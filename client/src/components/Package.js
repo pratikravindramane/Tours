@@ -9,6 +9,7 @@ const Package = ({ pkg, a, place }) => {
   const [amount, setAmount] = useState(a);
   const [people, setPeople] = useState(1);
   const [serverError, setServerError] = useState(false);
+  const [travelFees, setTravelFees] = useState(a);
   const [orderId, setOrderId] = useState("");
   const [mode, setMode] = useState("");
   const navigate = useNavigate();
@@ -17,10 +18,13 @@ const Package = ({ pkg, a, place }) => {
 
   const createOrder = async () => {
     try {
+      console.log({ amount: travelFees * people });
       const response = await axios.post(
         `${backendLocation}/college/create-order`,
         {
-          amount,
+          amount: travelFees * people,
+          date: moment(Date.now()).format("DD/MM/YYYY"),
+          college: decode.id,
         }
       );
       setOrderId(response.data.id);
@@ -33,7 +37,7 @@ const Package = ({ pkg, a, place }) => {
     await createOrder();
     const options = {
       key: process.env.KEY_ID,
-      amount: amount, // Amount in paise (e.g., 1000 paise = ₹10)
+      amount: travelFees * people,
       currency: "INR",
       name: "Your Company Name",
       description: "Test Transaction",
@@ -49,7 +53,7 @@ const Package = ({ pkg, a, place }) => {
             date: moment(Date.now()).format("DD/MM/YYYY"),
             college: decode.id,
             tour,
-            amount: amount,
+            amount: travelFees * people,
             place: place._id,
             peoples: people,
             mode,
@@ -100,7 +104,7 @@ const Package = ({ pkg, a, place }) => {
           <select
             className="form-select"
             onChange={(e) => {
-              setAmount(pkg.mode[e.target.value] * people);
+              setTravelFees(pkg.mode[e.target.value]);
               setMode(e.target.value);
             }}
           >
@@ -125,12 +129,12 @@ const Package = ({ pkg, a, place }) => {
               min={1}
               value={people}
               onChange={(e) => {
-                setPeople(e.target.value);
-                setAmount(amount * e.target.value);
+                setPeople(e.target.value === 0 ? 1 : e.target.value);
+                // setPe(amount * (e.target.value === 0 ? 1 : e.target.value));
               }}
             />
           </div>
-          <h6 className="mb-0">{`Total Price: ${amount}`}</h6>
+          <h6 className="mb-0">{`Total Price: ${travelFees * people}`}</h6>
         </div>
 
         <button
