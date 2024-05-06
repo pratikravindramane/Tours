@@ -94,14 +94,14 @@ const createOrder = asyncHandler(async (req, res) => {
   try {
     const { amount, college, date } = req.body;
     // Check if the college is already booked at the same place on the same date
-    const existingBooking = await Bookings.find({ college });
-    for (let i = 0; i < existingBooking.length; i++) {
-      if (existingBooking[i].date === date) {
-        throw new Error(
-          "College already booked at the same place on the same date"
-        );
-      }
-    }
+    // const existingBooking = await Bookings.find({ college });
+    // for (let i = 0; i < existingBooking.length; i++) {
+    //   if (existingBooking[i].date === date) {
+    //     throw new Error(
+    //       "College already booked at the same place on the same date"
+    //     );
+    //   }
+    // }
     const options = {
       amount: amount * 100, // Razorpay expects amount in paise
       currency: "INR",
@@ -127,12 +127,12 @@ const createBooking = asyncHandler(async (req, res) => {
 
   try {
     // Check if the college is already booked at the same place on the same date
-    const existingBooking = await Bookings.findOne({ college, date });
-    if (existingBooking) {
-      throw new Error(
-        "College already booked at the same place on the same date"
-      );
-    }
+    // const existingBooking = await Bookings.findOne({ college, date });
+    // if (existingBooking) {
+    //   throw new Error(
+    //     "College already booked at the same place on the same date"
+    //   );
+    // }
 
     // If not already booked, create the booking
     const booking = new Bookings({
