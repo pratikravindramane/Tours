@@ -32,16 +32,24 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/aboutus" style={{ color: "#008080" }}>About Us</a>
+                <a href="/aboutus" style={{ color: "#008080" }}>
+                  About Us
+                </a>
               </li>
               <li>
-                <a href="/contactus" style={{ color: "#008080" }}>Contact Us</a>
+                <a href="/contactus" style={{ color: "#008080" }}>
+                  Contact Us
+                </a>
               </li>
               <li>
-                <a href="/login" style={{ color: "#008080" }}>Login</a>
+                <a href="/login" style={{ color: "#008080" }}>
+                  Login
+                </a>
               </li>
               <li>
-                <a href="/signup" style={{ color: "#008080" }}>Signup</a>
+                <a href="/college/register" style={{ color: "#008080" }}>
+                  Signup
+                </a>
               </li>
             </ul>
           </div>
